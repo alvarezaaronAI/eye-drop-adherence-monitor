@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>\
+
+    <!-- Alternate Colors Scheme -->
+    <color name="blueI">#78C0E0</color>
+    <color name="blueII">#449DD1</color>
+    <color name="blueIII">#192BC2</color>
+    <color name="blueIV">#150578</color>
+    <color name="blueV">#0E0E52</color>
+
+    <color name="pastelI">#BDCFB5</color>
+    <color name="pastelII">#C0F8D1</color>
+    <color name="pastelIII">#B287A3</color>
+    <color name="pastelIV">#7E4E60</color>
+    <color name="pastelV">#482728</color>
+
+    <color name="brightsI">#423B0B</color>
+    <color name="brightsII">#B5FED9</color>
+    <color name="brightsIII">#98CBB4</color>
+    <color name="brightsIV">#7BA098</color>
+    <color name="brightsV">#474935</color>
+
+    <color name="daylightI">#D7FDEC</color>
+    <color name="daylightII">#A9FBD7</color>
+    <color name="daylightIII">#B2E4DB</color>
+    <color name="daylightIV">#B0C6CE</color>
+    <color name="daylightV">#938BA1</color>
+</resources>
