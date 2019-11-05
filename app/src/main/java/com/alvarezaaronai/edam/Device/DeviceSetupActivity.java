@@ -48,6 +48,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alvarezaaronai.edam.HomeActivity;
+import com.alvarezaaronai.edam.R;
 import com.mbientlab.metawear.MetaWearBoard;
 import com.mbientlab.metawear.android.BtleService;
 import com.alvarezaaronai.edam.Device.DeviceSetupActivityFragment.FragmentSettings;
@@ -58,10 +59,10 @@ import bolts.Task;
 import static android.content.DialogInterface.*;
 
 public class DeviceSetupActivity extends AppCompatActivity implements ServiceConnection, FragmentSettings {
-    public final static String EXTRA_BT_DEVICE= "com.mbientlab.metawear.starter.DeviceSetupActivity.EXTRA_BT_DEVICE";
+    public final static String EXTRA_BT_DEVICE= "com.alvarezaaronai.Device.DeviceSetupActivity.EXTRA_BT_DEVICE";
 
     public static class ReconnectDialogFragment extends DialogFragment implements  ServiceConnection {
-        private static final String KEY_BLUETOOTH_DEVICE = "com.mbientlab.metawear.starter.DeviceSetupActivity.ReconnectDialogFragment.KEY_BLUETOOTH_DEVICE";
+        private static final String KEY_BLUETOOTH_DEVICE = "com.alvarezaaronai.Device.DeviceSetupActivity.ReconnectDialogFragment.KEY_BLUETOOTH_DEVICE";
 
         private ProgressDialog reconnectDialog = null;
         private BluetoothDevice btDevice = null;
