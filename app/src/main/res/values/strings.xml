@@ -7,5 +7,14 @@
     <string name="title_reconnect_attempt">Reconnecting</string>
     <string name="message_wait">Please wait</string>
     <string name="action_disconnect">Disconnect</string>
+    <string name="action_device_info">Device Info</string>
+    <!-- Color Naming Resources -->
+    <string name="color_names_blue">Blue</string>
+    <string name="color_names_pastel">Pastel</string>
+    <string name="color_names_brights">Brights</string>
+    <string name="color_names_daylights">Daylights</string>
+    <!-- Dots Layout Naming Resources -->
+    <string name="dots_colors_switcher">Switch Colors</string>
+
 
 </resources>

@@ -1,11 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Dots.Settings"
-    tools:showIn="@layout/activity_settings">
+    tools:showIn="@layout/activity_settings"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/dots_colors_switcher"
+        />
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/radio_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/color_names_blue"
+            android:onClick="colorRadioClicked"/>
+        <RadioButton
+            android:id="@+id/radio_pastel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/color_names_pastel"
+            android:onClick="colorRadioClicked"/>
+        <RadioButton
+            android:id="@+id/radio_brights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/color_names_brights"
+            android:onClick="colorRadioClicked"/>
+        <RadioButton
+            android:id="@+id/radio_daylights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/color_names_daylights"
+            android:onClick="colorRadioClicked"/>
+    </RadioGroup>
 
-</android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

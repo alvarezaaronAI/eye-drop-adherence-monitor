@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,16 +16,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 //Imports from MeteWear
 import com.alvarezaaronai.edam.Device.DeviceSetupActivity;
+import com.alvarezaaronai.edam.Dots.Settings;
 import com.mbientlab.metawear.MetaWearBoard;
 import com.mbientlab.metawear.android.BtleService;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
+
+
 import com.mbientlab.bletoolbox.scanner.BleScannerFragment;
 
 import java.util.UUID;
 
 import bolts.Continuation;
 import bolts.Task;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class HomeActivity extends AppCompatActivity implements BleScannerFragment.ScannerCommunicationBus, ServiceConnection {
     //Fragments
@@ -47,8 +49,8 @@ public class HomeActivity extends AppCompatActivity implements BleScannerFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
 
         // Bind the service when the activity is created
         getApplicationContext().bindService(new Intent(this, BtleService.class),
@@ -56,27 +58,34 @@ public class HomeActivity extends AppCompatActivity implements BleScannerFragmen
 
     }
     //Options Menu
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            //Go to Settings Activity
+            Intent intent = new Intent(this, Settings.class);
+            //intent.putExtra(EXTRA_MESSAGE, message);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_device_info) {
+            //Go to Device Info Activity
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     //Frament
     @Override
@@ -102,8 +111,6 @@ public class HomeActivity extends AppCompatActivity implements BleScannerFragmen
     public void onServiceDisconnected(ComponentName componentName) {
 
     }
-
-    // Creating a digital device connection ( connecting the MetaWearR )
 
     // Life Cycles
     @Override
@@ -153,4 +160,6 @@ public class HomeActivity extends AppCompatActivity implements BleScannerFragmen
     public static Task<Void> reconnect(final MetaWearBoard board) {
         return board.connectAsync().continueWithTask(task -> task.isFaulted() ? reconnect(board) : task);
     }
+
+
 }
