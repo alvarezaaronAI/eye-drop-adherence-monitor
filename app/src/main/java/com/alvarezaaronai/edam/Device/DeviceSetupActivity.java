@@ -46,6 +46,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.alvarezaaronai.edam.HomeActivity;
 import com.alvarezaaronai.edam.R;
@@ -60,6 +62,7 @@ import static android.content.DialogInterface.*;
 
 public class DeviceSetupActivity extends AppCompatActivity implements ServiceConnection, FragmentSettings {
     public final static String EXTRA_BT_DEVICE= "com.alvarezaaronai.Device.DeviceSetupActivity.EXTRA_BT_DEVICE";
+
 
     public static class ReconnectDialogFragment extends DialogFragment implements  ServiceConnection {
         private static final String KEY_BLUETOOTH_DEVICE = "com.alvarezaaronai.Device.DeviceSetupActivity.ReconnectDialogFragment.KEY_BLUETOOTH_DEVICE";
@@ -118,10 +121,9 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
         setContentView(R.layout.activity_device_setup);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //Todo : Import Text Widget
+        //Get Text View
         btDevice= getIntent().getParcelableExtra(EXTRA_BT_DEVICE);
         getApplicationContext().bindService(new Intent(this, BtleService.class), this, BIND_AUTO_CREATE);
-        //Todo : Call fetchFSRData(); Method
     }
 
     @Override
@@ -183,7 +185,10 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
     }
 
     //Sensor Fetching Methods
-    //Todo : fetchFSRData() create and support
-        //Todo : String : Dummy Data
-        //Todo : Display String override previous and check app
+    public void fetchFSRData(View view) {
+        //When Clicked Change Data
+        TextView sensorData = findViewById(R.id.text_sensor_data);
+        sensorData.setText("Changed me!");
+
+    }
 }
