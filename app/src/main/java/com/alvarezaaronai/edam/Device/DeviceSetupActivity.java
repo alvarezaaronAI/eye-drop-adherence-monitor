@@ -118,9 +118,10 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
         setContentView(R.layout.activity_device_setup);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //Todo : Import Text Widget
         btDevice= getIntent().getParcelableExtra(EXTRA_BT_DEVICE);
         getApplicationContext().bindService(new Intent(this, BtleService.class), this, BIND_AUTO_CREATE);
+        //Todo : Call fetchFSRData(); Method
     }
 
     @Override
@@ -180,4 +181,9 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
     public BluetoothDevice getBtDevice() {
         return btDevice;
     }
+
+    //Sensor Fetching Methods
+    //Todo : fetchFSRData() create and support
+        //Todo : String : Dummy Data
+        //Todo : Display String override previous and check app
 }
