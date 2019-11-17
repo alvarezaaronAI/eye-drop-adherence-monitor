@@ -38,6 +38,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,6 +49,7 @@ import android.view.ViewGroup;
 import com.alvarezaaronai.edam.R;
 import com.mbientlab.metawear.MetaWearBoard;
 import com.mbientlab.metawear.android.BtleService;
+import com.mbientlab.metawear.builder.RouteBuilder;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -86,6 +89,7 @@ public class DeviceSetupActivityFragment extends Fragment implements ServiceConn
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
+
         return inflater.inflate(R.layout.fragment_device_setup, container, false);
     }
 
@@ -103,4 +107,41 @@ public class DeviceSetupActivityFragment extends Fragment implements ServiceConn
      * Called when the app has reconnected to the board
      */
     public void reconnected() { }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.acc_start).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                accelerometer.acceleration().addRouteAsync(new RouteBuilder() {
+                    @Override
+                    public void configure(RouteElement source) {
+                        source.stream(new Subscriber() {
+                            @Override
+                            public void apply(Data data, Object... env) {
+                                Log.i("MainActivity", data.value(Acceleration.class).toString());
+                            }
+                        });
+                    }
+                }).continueWith(new Continuation<Route, Void>() {
+                    @Override
+                    public Void then(Task<Route> task) throws Exception {
+                        accelerometer.acceleration().start();
+                        accelerometer.start();
+                        return null;
+                    }
+                });
+            }
+        });
+        view.findViewById(R.id.acc_stop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                accelerometer.stop();
+                accelerometer.acceleration().stop();
+                metawear.tearDown();
+            }
+        });
+    }
 }

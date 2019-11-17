@@ -44,6 +44,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,9 +52,16 @@ import android.widget.TextView;
 
 import com.alvarezaaronai.edam.HomeActivity;
 import com.alvarezaaronai.edam.R;
+import com.mbientlab.metawear.Data;
+import com.mbientlab.metawear.ForcedDataProducer;
 import com.mbientlab.metawear.MetaWearBoard;
+import com.mbientlab.metawear.Subscriber;
 import com.mbientlab.metawear.android.BtleService;
 import com.alvarezaaronai.edam.Device.DeviceSetupActivityFragment.FragmentSettings;
+import com.mbientlab.metawear.builder.RouteBuilder;
+import com.mbientlab.metawear.builder.RouteComponent;
+import com.mbientlab.metawear.module.Accelerometer;
+import com.mbientlab.metawear.module.Gpio;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -109,9 +117,11 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
         @Override
         public void onServiceDisconnected(ComponentName name) { }
     }
-
+    //Tags
+    final String TAG = "DeviceSetupActivityO";
     private BluetoothDevice btDevice;
     private MetaWearBoard metawear;
+    private Accelerometer accelerometer;
 
     private final String RECONNECT_DIALOG_TAG= "reconnect_dialog_tag";
 
@@ -124,6 +134,20 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
         //Get Text View
         btDevice= getIntent().getParcelableExtra(EXTRA_BT_DEVICE);
         getApplicationContext().bindService(new Intent(this, BtleService.class), this, BIND_AUTO_CREATE);
+
+        TextView sensorData = findViewById(R.id.text_sensor_data);
+        final Gpio gpio = metawear.getModule(Gpio.class);
+        // output 0V on pin 1
+        gpio.pin((byte) 0).clearOutput();
+
+        // Get producer for analog adc data
+        ForcedDataProducer adc = gpio.pin((byte) 0).analogAdc();
+        //Read values from Pin 9 (0)
+        adc.addRouteAsync(source -> source.stream((Subscriber) (data, env) -> {
+            Log.i(TAG, "adc = " + data.value(Short.class));
+            sensorData.setText(data.value(Short.class));
+
+        }));
     }
 
     @Override
@@ -144,6 +168,7 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -166,12 +191,21 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
                                 ((DeviceSetupActivityFragment) getSupportFragmentManager().findFragmentById(R.id.device_setup_fragment)).reconnected();
                             });
                         } else {
+                            //Accelerometer Configuration
+                            accelerometer= metawear.getModule(Accelerometer.class);
+                            accelerometer.configure()
+                                    .odr(25f)       // Set sampling frequency to 25Hz, or closest valid ODR
+                                    .commit();
                             finish();
                         }
 
                         return null;
                     });
         });
+
+        //9 Axis Configuration
+
+        //GPIO Configuration
     }
 
     @Override
@@ -188,7 +222,9 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
     public void fetchFSRData(View view) {
         //When Clicked Change Data
         TextView sensorData = findViewById(R.id.text_sensor_data);
-        sensorData.setText("Changed me!");
+        Log.i(TAG, "fetchFSRData: I Been Pressed");
+
 
     }
+
 }
