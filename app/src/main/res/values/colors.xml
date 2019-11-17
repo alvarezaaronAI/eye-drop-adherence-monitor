@@ -28,4 +28,8 @@
     <color name="daylightIII">#B2E4DB</color>
     <color name="daylightIV">#B0C6CE</color>
     <color name="daylightV">#938BA1</color>
+
+    <color name="action_text">#3D3AB0</color>
+    <color name="actionBarColor">#758cc0</color>
+    <color name="actionBarColorDark">#5c6e96</color>
 </resources>
